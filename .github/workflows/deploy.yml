@@ -10,7 +10,10 @@ env:
 jobs:
   test:
     environment: testing
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest #because we specified a container below, the steps will not run on this 'runner', but the container img will run on this machine only.
+    container:
+      image: node:16 #Img for docker; this can also be your own img published to docker hub  #all the steps in this 'test' job will run under this container
+      #env: #env needed for docker not steps
     env:
       MONGODB_CONNECTION_PROTOCOL: mongodb+srv
       MONGODB_CLUSTER_ADDRESS: cluster0.2jewck3.mongodb.net
