@@ -11,12 +11,12 @@ jobs:
   test:
     environment: testing
     runs-on: ubuntu-latest #because we specified a container below, the steps will not run on this 'runner', but the container img will run on this machine only.
-    container:
-      image: node:16 #Img for docker; this can also be your own img published to docker hub  #all the steps in this 'test' job will run under this container
-      #env: #env needed for docker not steps
+    # container:
+    #   image: node:16 #Img for docker; this can also be your own img published to docker hub  #all the steps in this 'test' job will run under this container
+    #   #env: #env needed for docker not steps
     env:
       MONGODB_CONNECTION_PROTOCOL: mongodb
-      MONGODB_CLUSTER_ADDRESS: mongodb
+      MONGODB_CLUSTER_ADDRESS: 127.0.0.1:27017
       MONGODB_USERNAME: root #here is the values for connection
       MONGODB_PASSWORD: example
       PORT: 8080
@@ -24,6 +24,8 @@ jobs:
     services: #services belong to a job,
       mongodb: #(not reserved name)
         image: mongo #img key - this is for mongodb config, which defined by Github Actions
+        ports:
+          - 27017:27017
         env:
           MONGO_INITDB_ROOT_USERNAME: root #these are not the connecting steps, it is only config the server and db
           MONGO_INITDB_ROOT_PASSWORD: example
